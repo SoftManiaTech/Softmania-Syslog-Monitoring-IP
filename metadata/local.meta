@@ -15,3 +15,10 @@ modtime = 1722477597.628191000
 owner = admin
 version = 9.2.0
 modtime = 1722477948.692401000
+
+[views/syslog_monitoring_dashboard]
+access = read : [ * ], write : [ * ]
+export = none
+owner = admin
+version = 9.2.0
+modtime = 1722688455.860823000
