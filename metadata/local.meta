@@ -1,0 +1,17 @@
+[app/ui]
+version = 9.2.0
+modtime = 1722477235.150876000
+
+[app/launcher]
+version = 9.2.0
+modtime = 1722477235.152138000
+
+[indexes/softmania_syslog_monitoring_idx]
+owner = admin
+version = 9.2.0
+modtime = 1722477597.628191000
+
+[inputs/tcp%3A%2F%2F5514]
+owner = admin
+version = 9.2.0
+modtime = 1722477948.692401000
