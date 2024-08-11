@@ -14,11 +14,23 @@ modtime = 1722477597.628191000
 [inputs/tcp%3A%2F%2F5514]
 owner = admin
 version = 9.2.0
-modtime = 1722477948.692401000
+modtime = 1723095807.564154000
 
 [views/syslog_monitoring_dashboard]
 access = read : [ * ], write : [ * ]
 export = none
 owner = admin
 version = 9.2.0
-modtime = 1722688455.860823000
+modtime = 1723258323.229651000
+
+[views/syslog_monitoring_dashboard_2]
+owner = admin
+version = 9.2.0
+modtime = 1723094827.716173000
+
+[props/syslog/EXTRACT-log_detail]
+access = read : [ * ], write : [ * ]
+export = none
+owner = admin
+version = 9.2.0
+modtime = 1723111634.400734000
