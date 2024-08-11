@@ -2,16 +2,16 @@
   <label>Syslog_Monitoring_Dashboard</label>
   <fieldset submitButton="true" autoRun="false">
     <input type="multiselect" token="syslog">
-      <label>field1</label>
-      <valuePrefix>syslog_client="</valuePrefix>
+      <label>host</label>
+      <valuePrefix>host= "</valuePrefix>
       <valueSuffix>"</valueSuffix>
-      <delimiter> OR </delimiter>
-      <fieldForLabel>syslog_client</fieldForLabel>
-      <fieldForValue>syslog_client</fieldForValue>
+      <delimiter> OR  </delimiter>
+      <fieldForLabel>host</fieldForLabel>
+      <fieldForValue>host</fieldForValue>
       <search>
-        <query>index="softmania_syslog_monitoring_idx"  | stats count by syslog_client</query>
-        <earliest>-24h@h</earliest>
-        <latest>now</latest>
+        <query>index="softmania_syslog_monitoring_idx"  | stats count by host</query>
+        <earliest>0</earliest>
+        <latest></latest>
       </search>
     </input>
   </fieldset>
@@ -20,11 +20,12 @@
       <single>
         <title>Total Events</title>
         <search>
-          <query>index="softmania_syslog_monitoring_idx"  | stats count</query>
+          <query>index="softmania_syslog_monitoring_idx" | stats count</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
         <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
       </single>
     </panel>
     <panel>
@@ -32,10 +33,11 @@
         <title>Count by Selected Host</title>
         <search>
           <query>index="softmania_syslog_monitoring_idx"  $syslog$ |stats count</query>
-          <earliest>-24h@h</earliest>
-          <latest>now</latest>
+          <earliest>0</earliest>
+          <latest></latest>
         </search>
         <option name="drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
         <drilldown>
           <set token="syslog">$click.value$</set>
         </drilldown>
@@ -47,11 +49,12 @@
       <single>
         <title>Number of Selected Host</title>
         <search>
-          <query>index="softmania_syslog_monitoring_idx"  $syslog$ |stats dc(syslog_client)</query>
+          <query>index="softmania_syslog_monitoring_idx"  $syslog$ |stats dc(host)</query>
           <earliest>0</earliest>
           <latest></latest>
         </search>
         <option name="drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
         <drilldown>
           <set token="syslog">$click.value$</set>
         </drilldown>
@@ -61,7 +64,7 @@
       <table>
         <title>Latest Event in Each Syslog_Client</title>
         <search>
-          <query>index="softmania_syslog_monitoring_idx" $syslog$ | stats latest(_time) as time1 by syslog_client | eval time=strftime(time1,"%m/%d/%y %H:%M:%S")| table syslog_client time</query>
+          <query>index="softmania_syslog_monitoring_idx" $syslog$ | stats latest(_time) as time1 by host | eval time=strftime(time1,"%m/%d/%y %H:%M:%S")| table host time</query>
           <earliest>0</earliest>
           <latest></latest>
         </search>
@@ -78,7 +81,7 @@
       <table>
         <title>Events Count from Each Host</title>
         <search>
-          <query>index="softmania_syslog_monitoring_idx"  | stats count by syslog_client</query>
+          <query>index="softmania_syslog_monitoring_idx"  | stats count by host</query>
           <earliest>0</earliest>
           <latest></latest>
         </search>
@@ -92,7 +95,7 @@
       <viz type="heat-map-viz.heat-map-viz">
         <title>Heat map Visualization</title>
         <search>
-          <query>index="softmania_syslog_monitoring_idx" | timechart count by syslog_client | fields - NULL</query>
+          <query>index="softmania_syslog_monitoring_idx" | timechart count by host | fields - NULL</query>
           <earliest>0</earliest>
           <latest></latest>
         </search>
@@ -138,12 +141,15 @@
       <table>
         <title>Events from Selected Syslog Client</title>
         <search>
-          <query>index="softmania_syslog_monitoring_idx"  $syslog$ | table host syslog_client source sourcetype log_detail</query>
+          <query>index="softmania_syslog_monitoring_idx"  $syslog$ | table host source sourcetype log_detail</query>
           <earliest>0</earliest>
           <latest></latest>
         </search>
-        <option name="drilldown">none</option>
+        <option name="drilldown">cell</option>
         <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <set token="syslog">$click.value$</set>
+        </drilldown>
       </table>
     </panel>
   </row>
